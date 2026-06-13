@@ -816,7 +816,7 @@ function renderEliminatorias() {
 function renderAll(update=false) {
   invalidarCache();
   if (!update) { renderGrupos(); renderFixtureCompleto(); }
-  renderArgPartidos();
+  //renderArgPartidos();
   for (const letra of Object.keys(GRUPOS)) {
     const el=document.querySelector('#tabla-grupo'+letra+' tbody');
     if (el) renderTabla('tabla-grupo'+letra, letra, letra==='J');
