@@ -839,6 +839,29 @@ function showTab(name, btn) {
 // INIT
 // ============================================================
 // Renderizar primero con datos locales (si hay), luego sincronizar con JSONbin
+function parseFechaPartido(p){
+
+  const meses = {
+    Ene:0,Feb:1,Mar:2,Abr:3,May:4,Jun:5,
+    Jul:6,Ago:7,Sep:8,Oct:9,Nov:10,Dic:11
+  };
+
+  const partes = p.fecha.split(' ');
+
+  const dia = parseInt(partes[1]);
+  const mes = meses[partes[2]];
+
+  const [hh,mm] = p.hora.split(':');
+
+  return new Date(
+    2026,
+    mes,
+    dia,
+    parseInt(hh),
+    parseInt(mm)
+  );
+}
+  
 function crearHome(){
 
   const ahora = new Date();
@@ -848,8 +871,7 @@ function crearHome(){
 
   const partidos = PARTIDOS_GRUPOS.map(p=>{
 
-      const fechaHora =
-        new Date(`${p.fecha} ${p.hora}:00`);
+      const fechaHora = parseFechaPartido(p);
 
       return {
         ...p,
@@ -959,46 +981,63 @@ function iniciarContador(fecha){
 
 function renderPartidosHoy(){
 
-  const hoy=new Date();
+  const hoy = new Date();
 
-  const hoyStr=
-      hoy.toISOString().split('T')[0];
+  const dias = [
+    'Dom','Lun','Mar','Mie','Jue','Vie','Sab'
+  ];
 
-  const box=
-      document.getElementById('today-matches');
+  const meses = [
+    'Ene','Feb','Mar','Abr','May','Jun',
+    'Jul','Ago','Sep','Oct','Nov','Dic'
+  ];
+
+  const hoyStr =
+    `${dias[hoy.getDay()]} ${hoy.getDate()} ${meses[hoy.getMonth()]}`;
+
+  const box = document.getElementById('today-matches');
 
   if(!box) return;
 
-  const partidosHoy=
-      PARTIDOS_GRUPOS.filter(
-        p=>p.fecha===hoyStr
-      );
+  const partidosHoy =
+    PARTIDOS_GRUPOS.filter(
+      p => p.fecha === hoyStr
+    );
 
-  box.innerHTML='';
+  box.innerHTML = '';
+
+  if(partidosHoy.length === 0){
+    box.innerHTML = `
+      <div class="home-card">
+        No hay partidos programados para hoy.
+      </div>
+    `;
+    return;
+  }
 
   partidosHoy.forEach(p=>{
 
-      const d=document.createElement('div');
+    const d=document.createElement('div');
 
-      d.className='partido-row';
+    d.className='partido-row';
 
-      d.innerHTML=`
-        <div class="equipo-lado">
-          ${getEquipo(p.h).bandera}
-          ${p.h}
-        </div>
+    d.innerHTML=`
+      <div class="equipo-lado">
+        ${getEquipo(p.h).bandera}
+        ${p.h}
+      </div>
 
-        <div>
-          ${p.hora} hs
-        </div>
+      <div>
+        ${p.hora} hs
+      </div>
 
-        <div class="equipo-lado derecha">
-          ${p.v}
-          ${getEquipo(p.v).bandera}
-        </div>
-      `;
+      <div class="equipo-lado derecha">
+        ${p.v}
+        ${getEquipo(p.v).bandera}
+      </div>
+    `;
 
-      box.appendChild(d);
+    box.appendChild(d);
   });
 }
 renderAll();
