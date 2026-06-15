@@ -27,9 +27,9 @@
             <span>Copa Mundial FIFA 2026</span>
             <span>Argentina UTC-3</span>
           </div>
-          <h2>El Mundial, partido a partido.</h2>
+          <h2>Seguí la Copa como si estuvieras en la cabina.</h2>
           <p>
-            Fixture, resultados, grupos, fases y datos en vivo en una vista pensada para seguir la copa sin perderse nada.
+            Fixture, resultados, grupos, fases y datos en vivo en una experiencia clara, vibrante y lista para los días de partido.
           </p>
           <div class="hero-actions" aria-label="Accesos rápidos">
             <button type="button" data-jump="matches">Ver partidos</button>
@@ -41,27 +41,44 @@
             <span>16 sedes</span>
           </div>
         </div>
-        <form class="token-panel" id="tokenForm">
-          <div class="token-title">
+        <aside class="hero-scorecard" aria-label="Vista destacada">
+          <div class="scorecard-top">
+            <span>Live Center</span>
+            <strong>2026</strong>
+          </div>
+          <div class="scorecard-match">
+            <span>Próximo</span>
+            <strong id="heroNextMatch">Conectá datos</strong>
+          </div>
+          <div class="scorecard-grid">
+            <div><strong id="heroTotalMatches">0</strong><span>Partidos</span></div>
+            <div><strong id="heroLiveMatches">0</strong><span>En vivo</span></div>
+          </div>
+        </aside>
+
+        <details class="token-panel" id="connectionDetails">
+          <summary>
             <span>Conexión de datos</span>
-            <strong>football-data.org</strong>
-          </div>
-          <label for="tokenInput">API token</label>
-          <div class="token-row">
-            <input id="tokenInput" name="token" type="password" autocomplete="off" placeholder="Pegá tu X-Auth-Token">
-            <button type="submit">Conectar</button>
-          </div>
-          <div class="settings-row">
-            <label>
-              <span>Temporada</span>
-              <input id="seasonInput" type="number" min="2026" max="2030" value="2026">
-            </label>
-            <button type="button" class="ghost" id="refreshBtn">Actualizar</button>
-          </div>
-          <p class="hint">Para GitHub Pages, usá el proxy público y dejá el token guardado como secreto en Cloudflare.</p>
-          <label for="proxyInput">Proxy opcional</label>
-          <input id="proxyInput" type="url" placeholder="https://tu-proxy.com">
-        </form>
+            <strong>Configurar</strong>
+          </summary>
+          <form id="tokenForm">
+            <label for="tokenInput">API token</label>
+            <div class="token-row">
+              <input id="tokenInput" name="token" type="password" autocomplete="off" placeholder="Pegá tu X-Auth-Token">
+              <button type="submit">Conectar</button>
+            </div>
+            <div class="settings-row">
+              <label>
+                <span>Temporada</span>
+                <input id="seasonInput" type="number" min="2026" max="2030" value="2026">
+              </label>
+              <button type="button" class="ghost" id="refreshBtn">Actualizar</button>
+            </div>
+            <p class="hint">Para GitHub Pages, usá el proxy público y dejá el token guardado como secreto en Cloudflare.</p>
+            <label for="proxyInput">Proxy opcional</label>
+            <input id="proxyInput" type="url" placeholder="https://tu-proxy.com/api">
+          </form>
+        </details>
       </section>
 
       <section class="summary-grid" aria-label="Resumen">
@@ -189,6 +206,7 @@
       <p>Conectá la API o cambiá los filtros.</p>
     </div>
   </template>
-  <script src="./app.js?v=3"></script>
+
+  <script src="./app.js?v=4"></script>
 </body>
 </html>
