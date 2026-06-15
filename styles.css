@@ -18,7 +18,8 @@
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    linear-gradient(180deg, #071d2a 0, #071d2a 430px, var(--paper) 430px);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   letter-spacing: 0;
@@ -62,6 +63,7 @@ button:hover {
   justify-content: space-between;
   gap: 20px;
   padding: 12px 0 20px;
+  color: #fff;
 }
 
 .eyebrow {
@@ -100,9 +102,10 @@ h3 {
 
 .status-card {
   align-items: center;
-  background: var(--panel);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 7px;
+  backdrop-filter: blur(16px);
   display: flex;
   gap: 10px;
   padding: 12px 14px;
@@ -128,20 +131,33 @@ h3 {
 
 .hero {
   background:
-    radial-gradient(circle at 78% 18%, rgba(215, 164, 54, 0.32), transparent 24%),
-    linear-gradient(100deg, rgba(7, 29, 42, 0.92), rgba(10, 67, 77, 0.72) 54%, rgba(7, 29, 42, 0.48)),
-    url("https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1800&q=80");
-  background-position: center;
+    linear-gradient(90deg, rgba(5, 22, 33, 0.98), rgba(5, 22, 33, 0.74) 48%, rgba(5, 22, 33, 0.24)),
+    url("https://images.unsplash.com/photo-1527871369852-eb58cb2b54e2?auto=format&fit=crop&w=1900&q=86");
+  background-position: center 38%;
   background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
   color: #fff;
   display: grid;
   gap: 28px;
-  grid-template-columns: minmax(0, 1fr) 390px;
-  min-height: 560px;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  min-height: 610px;
   overflow: hidden;
-  padding: clamp(24px, 5vw, 54px);
+  padding: clamp(28px, 5vw, 64px);
   place-items: center stretch;
   position: relative;
+}
+
+.hero::before {
+  background:
+    linear-gradient(135deg, transparent 0 45%, rgba(255, 255, 255, 0.16) 45% 46%, transparent 46%),
+    linear-gradient(45deg, transparent 0 58%, rgba(215, 164, 54, 0.4) 58% 59%, transparent 59%);
+  content: "";
+  inset: 0;
+  opacity: 0.75;
+  pointer-events: none;
+  position: absolute;
 }
 
 .hero::after {
@@ -152,6 +168,13 @@ h3 {
   left: 0;
   position: absolute;
   right: 0;
+}
+
+.hero-copy,
+.hero-scorecard,
+.token-panel {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-kicker,
@@ -181,11 +204,17 @@ h3 {
   text-transform: uppercase;
 }
 
+.hero-kicker span:first-child {
+  background: var(--gold);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #071d2a;
+}
+
 .hero-copy p:not(.eyebrow) {
   color: rgba(255, 255, 255, 0.86);
-  font-size: 1.12rem;
+  font-size: 1.18rem;
   line-height: 1.6;
-  max-width: 620px;
+  max-width: 660px;
 }
 
 .hero-actions {
@@ -205,36 +234,120 @@ h3 {
   margin-top: 8px;
 }
 
-.token-panel {
+.hero-scorecard {
   align-self: center;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  color: var(--ink);
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+  color: #fff;
   display: grid;
-  gap: 12px;
-  padding: 18px;
+  gap: 18px;
+  padding: 20px;
 }
 
-.token-title {
-  align-items: center;
-  border-bottom: 1px solid var(--line);
+.scorecard-top,
+.scorecard-grid {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
-  padding-bottom: 12px;
+  gap: 12px;
 }
 
-.token-title span {
-  color: var(--muted);
-  font-size: 0.78rem;
+.scorecard-top span,
+.scorecard-match span,
+.scorecard-grid span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.76rem;
   font-weight: 900;
   text-transform: uppercase;
 }
 
-.token-title strong {
-  color: var(--blue);
+.scorecard-top strong {
+  color: var(--gold);
+}
+
+.scorecard-match {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  gap: 8px;
+  padding: 18px 0;
+}
+
+.scorecard-match strong {
+  font-size: 1.75rem;
+  line-height: 1.05;
+}
+
+.scorecard-grid div {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  padding: 14px;
+}
+
+.scorecard-grid strong {
+  font-size: 1.8rem;
+}
+
+.token-panel {
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  bottom: 20px;
+  color: #fff;
+  max-width: 360px;
+  position: absolute;
+  right: 20px;
+  width: min(360px, calc(100% - 40px));
+}
+
+.token-panel summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 12px 14px;
+}
+
+.token-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.token-panel summary span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.token-panel summary strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.token-panel form {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.token-panel label {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.token-panel .hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.token-panel .ghost {
+  background: rgba(255, 255, 255, 0.88);
 }
 
 label {
@@ -600,6 +713,10 @@ dialog::backdrop {
     grid-template-columns: 1fr;
   }
 
+  .hero-scorecard {
+    max-width: 420px;
+  }
+
   .match-card,
   .phase-card .match-card {
     grid-template-columns: 1fr;
@@ -631,6 +748,19 @@ dialog::backdrop {
   .hero {
     min-height: auto;
     padding: 22px;
+  }
+
+  .hero-scorecard {
+    width: 100%;
+  }
+
+  .token-panel {
+    bottom: auto;
+    margin-top: 4px;
+    max-width: none;
+    position: relative;
+    right: auto;
+    width: 100%;
   }
 
   .hero-actions button {
