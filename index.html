@@ -720,25 +720,55 @@ Usa únicamente web_search para obtener datos actualizados.
 Todos los horarios deben estar en UTC-3 (Argentina).
 Todos los textos en español.`;
 
+// 1. Pedir la clave de forma segura al cargar la página si no está guardada
+let ANTHROPIC_API_KEY = localStorage.getItem('anthropic_key') || '';
+
+if (!ANTHROPIC_API_KEY) {
+    ANTHROPIC_API_KEY = prompt("Por favor, ingresa tu Anthropic API Key para ver los datos del Mundial en vivo:");
+    if (ANTHROPIC_API_KEY) {
+        localStorage.setItem('anthropic_key', ANTHROPIC_API_KEY);
+    }
+}
+
+// 2. Nueva función askClaude con soporte CORS nativo para navegador
 async function askClaude(userPrompt) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 4000,
-      system: SYSTEM_PROMPT,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: userPrompt }]
-    })
-  });
-  const data = await res.json();
-  const text = data.content
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('');
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+    if (!ANTHROPIC_API_KEY) {
+        throw new Error("No se proporcionó una API Key válida.");
+    }
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01', // Versión de API requerida por Anthropic
+            'anthropic-dangerous-direct-browser-access': 'true' // Desbloquea el error CORS
+        },
+        body: JSON.stringify({
+            model: 'claude-3-5-sonnet-20241022', // Ajustado a un modelo estándar de producción
+            max_tokens: 4000,
+            system: SYSTEM_PROMPT,
+            tools: [{ 
+                type: 'web_search_20250305', // Asegúrate de tener esta herramienta habilitada en tu cuenta
+                name: 'web_search' 
+            }],
+            messages: [{ role: 'user', content: userPrompt }]
+        })
+    });
+
+    if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData?.error?.message || `Error del servidor (Status ${res.status})`);
+    }
+
+    const data = await res.json();
+    const text = data.content
+        .filter(b => b.type === 'text')
+        .map(b => b.text)
+        .join('');
+    
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
 }
 
 // ─────────────────────────────────────────────
