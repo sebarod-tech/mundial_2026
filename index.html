@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Status Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script defer src="app.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>📱 WhatsApp Status Monitor</h1>
+        <p>Estado del servicio en tiempo real</p>
+    </header>
+
+    <main>
+
+        <section class="status-card">
+
+            <h2>Estado actual</h2>
+
+            <div id="statusIndicator" class="status online">
+                🟢 OPERATIVO
+            </div>
+
+            <p id="lastUpdate">
+                Última actualización: --
+            </p>
+
+        </section>
+
+        <section class="incident-card">
+
+            <h2>Incidente actual</h2>
+
+            <div id="incidentInfo">
+                No hay incidentes activos.
+            </div>
+
+        </section>
+
+        <section class="history-card">
+
+            <h2>Historial de caídas</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Duración</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="historyTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        WhatsApp Status Monitor © 2026
+
+    </footer>
+
+</body>
+
+</html>
