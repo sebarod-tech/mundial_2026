@@ -1,1 +1,127 @@
+/* ======= GENERAL ======= */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0f172a;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+header h1 {
+    font-size: 2.2rem;
+}
+
+header p {
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+/* ======= CONTENEDOR ======= */
+
+main {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ======= TARJETAS ======= */
+
+.status-card,
+.incident-card,
+.history-card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 15px rgba(0,0,0,.25);
+}
+
+.status-card h2,
+.incident-card h2,
+.history-card h2{
+    margin-bottom:20px;
+}
+
+/* ======= ESTADO ======= */
+
+.status{
+    font-size:2rem;
+    font-weight:bold;
+    text-align:center;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.online{
+    background:#14532d;
+    color:#4ade80;
+}
+
+.offline{
+    background:#7f1d1d;
+    color:#f87171;
+}
+
+.warning{
+    background:#78350f;
+    color:#facc15;
+}
+
+/* ======= TABLA ======= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#334155;
+}
+
+th,
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #475569;
+}
+
+tr:hover{
+    background:#273449;
+}
+
+/* ======= FOOTER ======= */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#94a3b8;
+}
+
+/* ======= RESPONSIVE ======= */
+
+@media(max-width:700px){
+
+    header h1{
+        font-size:1.7rem;
+    }
+
+    .status{
+        font-size:1.4rem;
+    }
+
+    table{
+        font-size:.85rem;
+    }
+
+}
